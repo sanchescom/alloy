@@ -9,7 +9,7 @@ RUN --mount=type=cache,target=/root/.cache/go-build \
     GO_TAGS="netgo promtail_journal_enabled" \
     GOEXPERIMENT="" \
     SKIP_UI_BUILD=1 \
-    make alloy 2>&1 || (echo "=== BUILD FAILED ===" && cd ./collector && go build -v -tags "netgo promtail_journal_enabled" ./... 2>&1 | tail -100 && exit 1)
+    make alloy
 
 FROM grafana/alloy:v1.14.0
 
