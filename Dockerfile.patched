@@ -1,0 +1,16 @@
+FROM grafana/alloy-build-image:v0.1.28 AS build
+
+COPY . /src/alloy
+WORKDIR /src/alloy
+
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    --mount=type=cache,target=/go/pkg/mod \
+    RELEASE_BUILD=1 VERSION=v1.14.0-patched \
+    GO_TAGS="netgo promtail_journal_enabled" \
+    GOEXPERIMENT="" \
+    SKIP_UI_BUILD=1 \
+    make alloy
+
+FROM grafana/alloy:v1.14.0
+
+COPY --from=build /src/alloy/build/alloy /bin/alloy

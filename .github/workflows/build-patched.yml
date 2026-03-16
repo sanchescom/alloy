@@ -35,10 +35,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
+          file: Dockerfile.patched
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:v1.14.0-patched
-          build-args: |
-            RELEASE_BUILD=1
-            VERSION=v1.14.0-patched
           cache-from: type=gha
           cache-to: type=gha,mode=max
